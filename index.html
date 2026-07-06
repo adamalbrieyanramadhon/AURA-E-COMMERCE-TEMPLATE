@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA PRO - High-Converting Minimalist E-Commerce Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        auraBg: '#F9F8F6',
+                        auraText: '#1A1A1A',
+                        auraSecondary: '#666666',
+                        auraAccent: '#2C3E50',
+                        auraAccentHover: '#1B2A38',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #F9F8F6; color: #1A1A1A; }
+        /* Animasi kustom untuk cart */
+        .cart-slide { transition: transform 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-auraAccent selection:text-white relative">
+
+    <div class="bg-auraText text-white text-xs py-2.5 px-4 text-center font-light tracking-wider flex flex-col sm:flex-row items-center justify-center gap-2 border-b border-white/10">
+        <span>LIMITED TIME OFFER: COMPLIMENTARY EXPRESS WORLDWIDE SHIPPING. ENDS IN:</span>
+        <span id="countdown" class="font-mono font-bold text-amber-200 tracking-normal">02 : 14 : 36</span>
+    </div>
+
+    <header class="sticky top-0 z-40 bg-[#F9F8F6]/90 backdrop-blur-md border-b border-auraText/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="font-serif text-2xl font-semibold tracking-wide text-auraText">AURA.</a>
+            
+            <nav class="hidden md:flex items-center space-x-8 text-xs font-semibold tracking-widest text-auraSecondary">
+                <a href="#product" class="hover:text-auraText transition-colors">PRODUCT</a>
+                <a href="#specs" class="hover:text-auraText transition-colors">SPECS</a>
+                <a href="#benefits" class="hover:text-auraText transition-colors">BENEFITS</a>
+                <a href="#faq" class="hover:text-auraText transition-colors">FAQ</a>
+                <a href="#reviews" class="hover:text-auraText transition-colors">REVIEWS</a>
+            </nav>
+
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleCart(true)" class="relative p-2 text-auraText hover:text-auraAccent transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span id="cart-count" class="absolute top-1 right-1 bg-auraAccent text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">1</span>
+                </button>
+                <a href="#checkout" class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-xs font-semibold tracking-widest text-white bg-auraAccent hover:bg-auraAccentHover transition-colors uppercase">
+                    Buy Now
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative min-h-[calc(100vh-120px)] flex items-center py-16 lg:py-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-6 z-10 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-auraAccent/5 border border-auraAccent/10 px-3 py-1 text-xs font-medium text-auraAccent">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>In Stock — Ready to Dispatch</span>
+                    </div>
+                    
+                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-auraText leading-[1.15] font-normal">
+                        Pure Elegance.<br>Crafted for <span class="italic font-light">Perfection</span>.
+                    </h1>
+                    <p class="text-base text-auraSecondary leading-relaxed max-w-xl mx-auto lg:mx-0 font-light">
+                        Experience the perfect blend of modern minimalism and timeless design. Engineered carefully to elevate your daily ritual.
+                    </p>
+
+                    <div class="pt-2 space-y-3">
+                        <p class="text-xs font-semibold uppercase tracking-wider text-auraText">Select Finish: <span id="selected-color-name" class="font-normal text-auraSecondary">Obsidian Black</span></p>
+                        <div class="flex items-center justify-center lg:justify-start space-x-4">
+                            <button onclick="changeColor('Obsidian Black', 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80')" class="w-8 h-8 rounded-full bg-[#1A1A1A] ring-2 ring-offset-2 ring-auraText focus:outline-none transition-all"></button>
+                            <button onclick="changeColor('Minimalist Silver', 'https://images.unsplash.com/photo-1508615039623-a25605d2b022?auto=format&fit=crop&w=1000&q=80')" class="w-8 h-8 rounded-full bg-[#D8D8D8] ring-2 ring-offset-2 ring-transparent hover:ring-neutral-400 focus:outline-none transition-all"></button>
+                            <button onclick="changeColor('Deep Forest Navy', 'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1000&q=80')" class="w-8 h-8 rounded-full bg-[#2C3E50] ring-2 ring-offset-2 ring-transparent hover:ring-auraAccent focus:outline-none transition-all"></button>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <button onclick="addToCart()" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-xs font-semibold tracking-widest text-white bg-auraAccent hover:bg-auraAccentHover transition-colors uppercase shadow-lg">
+                            Add To Cart — $129
+                        </button>
+                        <button onclick="toggleModal(true)" class="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-4 text-xs font-semibold tracking-widest text-auraText border border-auraText/20 hover:border-auraText transition-colors uppercase">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <span>Watch Film</span>
+                        </button>
+                    </div>
+                    
+                    <div class="pt-4 border-t border-auraText/10 flex items-center justify-center lg:justify-start space-x-6 text-[11px] text-auraSecondary">
+                        <span>✓ 2-Year Warranty</span>
+                        <span>✓ 30-Day Returns</span>
+                        <span>✓ Secure Checkout</span>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6 relative flex justify-center items-center">
+                    <div class="absolute inset-0 bg-[#EFECE6] transform rotate-2 scale-95 -z-10 rounded-lg"></div>
+                    <img id="main-product-image" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80" alt="AURA Product" class="w-full max-w-md lg:max-w-xl h-[450px] sm:h-[550px] object-cover shadow-2xl rounded-sm transition-opacity duration-300">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="specs" class="py-20 bg-[#F4F2EE] border-y border-auraText/10">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <span class="text-xs font-semibold uppercase tracking-[0.2em] text-auraSecondary">Engineering</span>
+                <h2 class="font-serif text-3xl text-auraText">Technical Specifications</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-8 shadow-sm border border-auraText/5">
+                <div class="space-y-4 divide-y divide-auraText/10 text-xs">
+                    <div class="flex justify-between py-2"><span class="text-auraSecondary font-medium">Case Material</span><span class="font-semibold text-auraText">316L Stainless Steel</span></div>
+                    <div class="flex justify-between py-2"><span class="text-auraSecondary font-medium">Coating</span><span class="font-semibold text-auraText">Organic Matte PVD</span></div>
+                    <div class="flex justify-between py-2"><span class="text-auraSecondary font-medium">Dimensions</span><span class="font-semibold text-auraText">40mm x 8.5mm</span></div>
+                </div>
+                <div class="space-y-4 divide-y divide-auraText/10 text-xs">
+                    <div class="flex justify-between py-2"><span class="text-auraSecondary font-medium">Water Resistance</span><span class="font-semibold text-auraText">5 ATM (50 Meters)</span></div>
+                    <div class="flex justify-between py-2"><span class="text-auraSecondary font-medium">Glass / Protection</span><span class="font-semibold text-auraText">Sapphire Crystal Glass</span></div>
+                    <div class="flex justify-between py-2"><span class="text-auraSecondary font-medium">Weight</span><span class="font-semibold text-auraText">64 grams (Ultralight)</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-20 space-y-4">
+                <span class="text-xs font-semibold uppercase tracking-[0.2em] text-auraSecondary">Why Choose Us</span>
+                <h2 class="font-serif text-3xl sm:text-4xl text-auraText">Designed with Intentionality</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 border border-auraText/5 space-y-4">
+                    <h3 class="font-serif text-xl text-auraText font-medium">Premium Materials</h3>
+                    <p class="text-xs text-auraSecondary leading-relaxed font-light">Sourced strictly from sustainable, high-grade global suppliers who share our commitment to long-term structural durability.</p>
+                </div>
+                <div class="bg-white p-8 border border-auraText/5 space-y-4">
+                    <h3 class="font-serif text-xl text-auraText font-medium">Timeless Aesthetic</h3>
+                    <p class="text-xs text-auraSecondary leading-relaxed font-light">A beautiful minimalist visual footprint that seamlessly blends into and elevates any architectural lifestyle or modern workspace.</p>
+                </div>
+                <div class="bg-white p-8 border border-auraText/5 space-y-4">
+                    <h3 class="font-serif text-xl text-auraText font-medium">Lifetime Warranty</h3>
+                    <p class="text-xs text-auraSecondary leading-relaxed font-light">Built to endure generations. We stand completely and proudly behind our master-level artisan manufacturing and precision craftsmanship.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-24 bg-[#EFECE6]">
+        <div class="max-w-3xl mx-auto px-6 space-y-12">
+            <div class="text-center space-y-3">
+                <span class="text-xs font-semibold uppercase tracking-[0.2em] text-auraSecondary">Common Questions</span>
+                <h2 class="font-serif text-3xl text-auraText">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="space-y-4" id="faq-container">
+                <div class="bg-[#F9F8F6] border border-auraText/10">
+                    <button onclick="toggleFaq(1)" class="w-full p-6 text-left font-serif text-base font-medium flex justify-between items-center text-auraText">
+                        <span>Do you ship internationally?</span>
+                        <span id="faq-icon-1" class="text-xl">+</span>
+                    </button>
+                    <div id="faq-body-1" class="hidden px-6 pb-6 text-xs text-auraSecondary leading-relaxed font-light">
+                        Yes! We offer complimentary express worldwide tracked shipping on all orders above $100. Delivery usually takes 3 to 5 business days depending on your region.
+                    </div>
+                </div>
+
+                <div class="bg-[#F9F8F6] border border-auraText/10">
+                    <button onclick="toggleFaq(2)" class="w-full p-6 text-left font-serif text-base font-medium flex justify-between items-center text-auraText">
+                        <span>What does the 2-Year warranty cover?</span>
+                        <span id="faq-icon-2" class="text-xl">+</span>
+                    </button>
+                    <div id="faq-body-2" class="hidden px-6 pb-6 text-xs text-auraSecondary leading-relaxed font-light">
+                        Our warranty covers any manufacturing defects, structural failures, or material deterioration under normal everyday usage. We will repair or replace your piece hassle-free.
+                    </div>
+                </div>
+
+                <div class="bg-[#F9F8F6] border border-auraText/10">
+                    <button onclick="toggleFaq(3)" class="w-full p-6 text-left font-serif text-base font-medium flex justify-between items-center text-auraText">
+                        <span>What is your return & exchange policy?</span>
+                        <span id="faq-icon-3" class="text-xl">+</span>
+                    </button>
+                    <div id="faq-body-3" class="hidden px-6 pb-6 text-xs text-auraSecondary leading-relaxed font-light">
+                        We offer a 30-day no-questions-asked return policy. If you don't completely love your AURA piece, simply return it in its original condition for a full refund.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="checkout" class="py-28 bg-auraAccent text-white text-center">
+        <div class="max-w-4xl mx-auto px-6 space-y-8">
+            <span class="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">Secure Order</span>
+            <h2 class="font-serif text-4xl sm:text-5xl font-normal leading-tight">Elevate Your Daily Ritual Today.</h2>
+            <p class="text-sm text-white/80 max-w-lg mx-auto font-light">Complimentary global shipping & custom luxury presentation packaging included.</p>
+            <div class="pt-4">
+                <button onclick="addToCart()" class="px-10 py-5 text-xs font-bold tracking-widest text-auraText bg-white hover:bg-[#F9F8F6] transition-colors uppercase shadow-2xl">
+                    Add To Cart — $129
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-auraText text-[#CFCBC4] py-16 border-t border-white/5 text-xs">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <span class="font-serif text-xl text-white">AURA.</span>
+            <p class="text-neutral-500">&copy; 2026 AURA Template Pro. All rights reserved.</p>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-white">Privacy</a>
+                <a href="#" class="hover:text-white">Terms</a>
+                <a href="#" class="hover:text-white">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="cart-backdrop" onclick="toggleCart(false)" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
+    <div id="cart-sidebar" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-auraBg z-50 shadow-2xl transform translate-x-full cart-slide flex flex-col justify-between p-6">
+        <div>
+            <div class="flex items-center justify-between pb-6 border-b border-auraText/10">
+                <h4 class="font-serif text-xl text-auraText">Your Cart (<span id="cart-item-count">1</span>)</h4>
+                <button onclick="toggleCart(false)" class="text-auraSecondary hover:text-auraText text-2xl">&times;</button>
+            </div>
+            
+            <div class="py-6 space-y-6">
+                <div class="flex items-center space-x-4">
+                    <img id="cart-item-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=200&q=80" class="w-16 h-16 object-cover rounded">
+                    <div class="flex-1">
+                        <h5 class="text-sm font-semibold text-auraText">AURA Minimalist Piece</h5>
+                        <p id="cart-item-variant" class="text-xs text-auraSecondary">Obsidian Black</p>
+                        <p class="text-xs font-bold text-auraAccent mt-1">$129.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-auraText/10 pt-6 space-y-4">
+            <div class="flex justify-between text-sm font-semibold text-auraText">
+                <span>Subtotal</span>
+                <span>$129.00 USD</span>
+            </div>
+            <p class="text-[11px] text-auraSecondary font-light">Taxes and express worldwide shipping calculated at checkout.</p>
+            <button onclick="alert('Proceeding to Checkout Mockup... You can integrate Stripe or Shopify Checkout here!')" class="w-full py-4 bg-auraAccent hover:bg-auraAccentHover text-white text-xs font-bold tracking-widest uppercase transition-colors">
+                Proceed To Checkout
+            </button>
+        </div>
+    </div>
+
+    <div id="video-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+        <div class="relative w-full max-w-3xl bg-black aspect-video rounded overflow-hidden">
+            <button onclick="toggleModal(false)" class="absolute top-4 right-4 text-white text-2xl z-10">&times;</button>
+            <div class="w-full h-full flex items-center justify-center text-white/50 text-xs tracking-widest uppercase">
+                [ Brand Film / Video Presentation Mockup ]
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Countdown Timer Logic
+        let totalSeconds = (2 * 3600) + (14 * 60) + 36;
+        setInterval(() => {
+            if (totalSeconds > 0) {
+                totalSeconds--;
+                let hours = Math.floor(totalSeconds / 3600);
+                let mins = Math.floor((totalSeconds % 3600) / 60);
+                let secs = totalSeconds % 60;
+                document.getElementById('countdown').innerText = 
+                    `${String(hours).padStart(2, '0')} : ${String(mins).padStart(2, '0')} : ${String(secs).padStart(2, '0')}`;
+            }
+        }, 1000);
+
+        // 2. Interactive Color Variant Switcher
+        function changeColor(name, imgUrl) {
+            document.getElementById('selected-color-name').innerText = name;
+            document.getElementById('cart-item-variant').innerText = name;
+            let img = document.getElementById('main-product-image');
+            img.style.opacity = '0.3';
+            setTimeout(() => {
+                img.src = imgUrl;
+                document.getElementById('cart-item-img').src = imgUrl;
+                img.style.opacity = '1';
+            }, 150);
+        }
+
+        // 3. Interactive Slide-Out Cart Logic
+        function toggleCart(show) {
+            const backdrop = document.getElementById('cart-backdrop');
+            const sidebar = document.getElementById('cart-sidebar');
+            if (show) {
+                backdrop.classList.remove('hidden');
+                setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+                sidebar.classList.remove('translate-x-full');
+            } else {
+                sidebar.classList.add('translate-x-full');
+                backdrop.classList.add('opacity-0');
+                setTimeout(() => backdrop.classList.add('hidden'), 300);
+            }
+        }
+
+        function addToCart() {
+            toggleCart(true);
+        }
+
+        // 4. Interactive FAQ Accordion
+        function toggleFaq(id) {
+            const body = document.getElementById(`faq-body-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+            if (body.classList.contains('hidden')) {
+                body.classList.remove('hidden');
+                icon.innerText = '−';
+            } else {
+                body.classList.add('hidden');
+                icon.innerText = '+';
+            }
+        }
+
+        // 5. Video Modal Logic
+        function toggleModal(show) {
+            const modal = document.getElementById('video-modal');
+            if (show) modal.classList.replace('hidden', 'flex');
+            else modal.classList.replace('flex', 'hidden');
+        }
+    </script>
+</body>
+</html>
