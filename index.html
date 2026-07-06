@@ -4,9 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AURA PRO - High-Converting Minimalist E-Commerce Template</title>
+    
+    <meta name="description" content="AURA - High-converting premium minimalist e-commerce template designed for modern luxury brands.">
+    <meta property="og:title" content="AURA PRO - Minimalist E-Commerce Store">
+    <meta property="og:description" content="Experience pure elegance. Engineered to elevate daily rituals with minimalist aesthetics.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:type" content="website">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -30,11 +38,11 @@
     <style>
         html { scroll-behavior: smooth; }
         body { background-color: #F9F8F6; color: #1A1A1A; }
-        /* Animasi kustom untuk cart */
         .cart-slide { transition: transform 0.3s ease-in-out; }
+        .popup-fade { transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; }
     </style>
 </head>
-<body class="font-sans antialiased selection:bg-auraAccent selection:text-white relative">
+<body class="font-sans antialiased selection:bg-auraAccent selection:text-white relative pb-16 sm:pb-0">
 
     <div class="bg-auraText text-white text-xs py-2.5 px-4 text-center font-light tracking-wider flex flex-col sm:flex-row items-center justify-center gap-2 border-b border-white/10">
         <span>LIMITED TIME OFFER: COMPLIMENTARY EXPRESS WORLDWIDE SHIPPING. ENDS IN:</span>
@@ -227,6 +235,25 @@
         </div>
     </footer>
 
+    <div class="sm:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-auraText/10 p-4 z-40 flex items-center justify-between shadow-2xl">
+        <div>
+            <p class="text-xs font-serif font-bold text-auraText">AURA Minimalist</p>
+            <p class="text-[11px] font-semibold text-auraAccent">$129.00 USD</p>
+        </div>
+        <button onclick="addToCart()" class="px-6 py-2.5 bg-auraAccent text-white text-xs font-bold tracking-widest uppercase">
+            Add To Cart
+        </button>
+    </div>
+
+    <div id="sales-popup" class="fixed bottom-20 sm:bottom-6 left-6 bg-white border border-auraText/10 shadow-2xl p-3 rounded z-40 flex items-center space-x-3 opacity-0 translate-y-4 pointer-events-none popup-fade max-w-xs">
+        <img id="popup-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=100&q=80" class="w-10 h-10 object-cover rounded">
+        <div class="text-[11px]">
+            <p class="font-semibold text-auraText"><span id="popup-name">Marcus</span> in <span id="popup-city">London</span></p>
+            <p class="text-auraSecondary text-[10px]">Purchased AURA Minimalist Piece</p>
+            <p class="text-emerald-600 font-medium text-[9px] mt-0.5">Just now</p>
+        </div>
+    </div>
+
     <div id="cart-backdrop" onclick="toggleCart(false)" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
     <div id="cart-sidebar" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-auraBg z-50 shadow-2xl transform translate-x-full cart-slide flex flex-col justify-between p-6">
         <div>
@@ -269,7 +296,7 @@
     </div>
 
     <script>
-        // 1. Countdown Timer Logic
+        // 1. Countdown Timer
         let totalSeconds = (2 * 3600) + (14 * 60) + 36;
         setInterval(() => {
             if (totalSeconds > 0) {
@@ -282,7 +309,7 @@
             }
         }, 1000);
 
-        // 2. Interactive Color Variant Switcher
+        // 2. Interactive Color Switcher
         function changeColor(name, imgUrl) {
             document.getElementById('selected-color-name').innerText = name;
             document.getElementById('cart-item-variant').innerText = name;
@@ -295,7 +322,7 @@
             }, 150);
         }
 
-        // 3. Interactive Slide-Out Cart Logic
+        // 3. Slide-Out Cart Logic
         function toggleCart(show) {
             const backdrop = document.getElementById('cart-backdrop');
             const sidebar = document.getElementById('cart-sidebar');
@@ -309,12 +336,9 @@
                 setTimeout(() => backdrop.classList.add('hidden'), 300);
             }
         }
+        function addToCart() { toggleCart(true); }
 
-        function addToCart() {
-            toggleCart(true);
-        }
-
-        // 4. Interactive FAQ Accordion
+        // 4. FAQ Accordion
         function toggleFaq(id) {
             const body = document.getElementById(`faq-body-${id}`);
             const icon = document.getElementById(`faq-icon-${id}`);
@@ -327,12 +351,33 @@
             }
         }
 
-        // 5. Video Modal Logic
+        // 5. Video Modal
         function toggleModal(show) {
             const modal = document.getElementById('video-modal');
             if (show) modal.classList.replace('hidden', 'flex');
             else modal.classList.replace('flex', 'hidden');
         }
+
+        // 6. Live Sales Popup (Muncul otomatis tiap 12 detik)
+        const buyers = [
+            { name: 'Marcus', city: 'London' },
+            { name: 'Sarah', city: 'New York' },
+            { name: 'Alex', city: 'Berlin' },
+            { name: 'Elena', city: 'Paris' },
+            { name: 'David', city: 'Tokyo' }
+        ];
+        setInterval(() => {
+            const randomBuyer = buyers[Math.floor(Math.random() * buyers.length)];
+            document.getElementById('popup-name').innerText = randomBuyer.name;
+            document.getElementById('popup-city').innerText = randomBuyer.city;
+            
+            const popup = document.getElementById('sales-popup');
+            popup.classList.remove('opacity-0', 'translate-y-4');
+            
+            setTimeout(() => {
+                popup.classList.add('opacity-0', 'translate-y-4');
+            }, 4000); // Hilang lagi setelah 4 detik
+        }, 12000); // Muncul setiap 12 detik
     </script>
 </body>
 </html>
